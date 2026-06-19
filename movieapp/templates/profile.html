@@ -1,0 +1,95 @@
+
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CineData - Προφίλ Μέλους</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #121212; color: white; font-family: 'Segoe UI', sans-serif; }
+        .card { border-radius: 15px; border-color: #333; }
+        .btn-warning { background-color: #ffc107; border: none; font-weight: bold; color: black; }
+        .btn-warning:hover { background-color: #e0a800; }
+        .default-avatar { width: 130px; height: 130px; border-radius: 50%; background-color: #333; display: flex; align-items: center; justify-content: center; border: 4px solid #ffc107; margin: 0 auto; }
+        .default-avatar svg { fill: #888; width: 70px; height: 70px; }
+        .info-label { color: #888; font-size: 0.9rem; }
+        .info-value { font-size: 1.1rem; font-weight: 500; margin-bottom: 1.5rem; }
+        .form-control-plaintext { color: white; font-size: 1.1rem; padding-left: 0; }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-dark" style="background-color: #101010; padding: 1.2rem 0;">
+    <div class="container">
+        <a class="navbar-brand d-flex align-items-center m-0" href="/catalog/" style="color: #ffc107; font-weight: 700; font-size: 2rem; letter-spacing: 0.5px; text-decoration: none;">
+            <span style="margin-right: 12px;">🎬</span> CineData
+        </a>
+    </div>
+</nav>
+
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-7 col-lg-6">
+            
+            <div class="card bg-dark text-white shadow-lg">
+                <div class="card-header border-0 text-center pt-5 pb-4">
+                    <div class="default-avatar mb-3">
+                        <svg viewBox="0 0 16 16"><path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+                    </div>
+                    <h2 class="fw-bold m-0">Cinema Member</h2>
+                    <p class="text-warning m-0">Εγγεγραμμένο Μέλος</p>
+                </div>
+                
+                <div class="card-body p-4 p-md-5 pt-0">
+                    <form>
+                        <h5 class="text-muted text-uppercase mb-4 pb-2 border-bottom border-secondary">Στοιχεία Λογαριασμού</h5>
+                        
+                        <div class="row mb-3">
+                            <label class="col-sm-4 info-label col-form-label">Όνομα Χρήστη</label>
+                            <div class="col-sm-8">
+                                <input type="text" readonly class="form-control-plaintext" value="cinema_user_2024">
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="email" class="info-label mb-1">Διεύθυνση Email</label>
+                            <input type="email" id="email" class="form-control bg-dark text-white border-secondary" value="member@cinedata.gr">
+                        </div>
+
+                        <div class="row mt-5">
+                            <div class="col-6">
+                                <p class="info-label m-0">Ημερομηνία Εγγραφής</p>
+                                <p class="info-value">15 Ιανουαρίου 2024</p>
+                            </div>
+                            <div class="col-6">
+                                <p class="info-label m-0">Σύνολο Κριτικών</p>
+                                <p class="info-value">🍿 12 ταινίες</p>
+                            </div>
+                        </div>
+
+                        <div class="d-grid mt-5">
+                            <button type="button" class="btn btn-warning py-2 shadow-sm">ΑΠΟΘΗΚΕΥΣΗ ΑΛΛΑΓΩΝ</button>
+                        </div>
+                    </form>
+
+                    <hr class="my-5 border-secondary">
+
+                    <div class="bg-danger bg-opacity-10 p-4 border border-danger rounded text-center">
+                        <h5 class="text-danger fw-bold mb-2">Διαγραφή Λογαριασμού</h5>
+                        <p class="small text-white-50 mb-3">
+                            Η ενέργεια αυτή είναι <strong>οριστική</strong> και θα διαγράψει όλα τα δεδομένα σας από το CineData.
+                        </p>
+                        <button type="button" class="btn btn-outline-danger btn-sm px-4">ΟΡΙΣΤΙΚΗ ΔΙΑΓΡΑΦΗ</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-4">
+                <a href="/catalog/" class="text-secondary text-decoration-none small">← Πίσω στον Κατάλογο</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

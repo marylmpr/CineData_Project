@@ -1,0 +1,127 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ιστορικό Κριτικών - CineData</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    
+    <style>
+        body { 
+            background-color: #121212; 
+            color: white; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            margin: 0;
+            padding: 0;
+        }
+        a.back-link, a.back-link:visited, a.back-link:hover, a.back-link:active {
+            color: white !important;
+            text-decoration: none !important;
+            display: inline-block;
+            margin-top: 20px;
+        }
+        .container { 
+            max-width: 900px; 
+            margin: 20px auto; 
+            padding: 30px; 
+            background: #1e1e1e; 
+            border-radius: 12px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        h2 { 
+            text-align: center; 
+            color: #ffcc00; 
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+        }
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin-top: 10px; 
+        }
+        th, td { 
+            padding: 15px; 
+            text-align: left; 
+            border-bottom: 1px solid #333; 
+        }
+        th { 
+            background-color: #2c2c2c; 
+            color: #ffcc00; 
+            font-size: 0.9rem;
+        }
+        tr:hover { 
+            background-color: #252525; 
+        }
+        .rating { 
+            color: #ffcc00; 
+            font-weight: bold; 
+            background: rgba(255, 204, 0, 0.1);
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        .movie-title {
+            font-weight: bold;
+            color: #ffffff;
+        }
+        .back-link { 
+            display: inline-block; 
+            margin-top: 30px; 
+            text-align: center; 
+            color: #aaa; 
+            text-decoration: none; 
+            transition: 0.3s;
+        }
+        .back-link:hover { 
+            color: #ffcc00; 
+            transform: translateX(-5px);
+        }
+        .brand-name {
+            text-align: left !important;
+            font-size: 2rem;
+            color: #ffc107;
+            margin-left: 0;
+        }
+    </style>
+</head>
+<body style="background-color: #101010; color: white;">
+
+    <div class="container-fluid" style="background: transparent; border: none; box-shadow: none; padding-top: 20px; padding-left: 80px !important;">
+        <a href="/catalog/" style="text-decoration: none; font-size: 2rem; font-weight: bold; color: #ffc107;">🎬 CineData</a>
+    </div>
+
+    <div class="container">
+        <h2>Το Ιστορικό των Κριτικών Μου 🍿</h2>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Ταινία</th>
+                    <th>Η δική μου Κριτική</th>
+                    <th>Βαθμολογία</th>
+                    <th>Ημερομηνία</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for review in reviews %}
+                <tr>
+                    <td class="movie-title">{{ review.movie.title }}</td> 
+                    <td>{{ review.comment }}</td>
+                    <td><span class="rating">{{ review.rating }}/5</span></td>
+                    <td>{{ review.created_at|date:"d/m/Y" }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" style="text-align: center; color: #888;">Δεν έχετε υποβάλει ακόμα καμία κριτική.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{% url 'reviews' %}" class="back-link" style="margin-right: 20px;">+ Νέα Κριτική</a>
+        <a href="/catalog/" class="back-link">← Πίσω στον Κατάλογο</a>
+    </div>
+
+</body>
+</html>

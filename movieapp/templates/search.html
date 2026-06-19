@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <title>CineData - Αναζήτηση</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #101010;
+        }
+
+        .custom-input {
+            background-color: #2b2b2b !important;
+            border: 1px solid #444 !important;
+            color: white !important;
+        }
+
+        .custom-input:focus {
+            border-color: #ffc107 !important;
+            box-shadow: 0 0 8px rgba(255, 193, 7, 0.4) !important;
+            background-color: #2b2b2b !important;
+            color: white !important;
+        }
+
+        .custom-input::placeholder {
+            color: #888;
+        }
+
+        option {
+            background-color: #1e1e1e;
+            color: white;
+        }
+
+        .navbar-brand:hover {
+            color: #ffc107 !important;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body class="text-white">
+
+    <nav class="navbar navbar-dark" style="background-color: #101010; padding: 1.2rem 0;">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center m-0" href="/catalog/" style="color: #ffc107; font-weight: 700; font-size: 2rem; letter-spacing: 0.5px; text-decoration: none;">
+                <span style="margin-right: 12px;">🎬</span> CineData
+            </a>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="card shadow-lg p-4 text-white border-0" style="background-color: #1e1e1e; border-radius: 15px;">
+                    <h2 class="mb-4 text-center" style="font-weight: 600;">Αναζήτηση Ταινιών 🔍</h2>
+                    
+                    <form class="row g-3" method="GET" action="/search/">
+                        <div class="col-md-6">
+                            <input type="text" name="q" class="form-control custom-input" placeholder="Γράψτε τίτλο ταινίας...">
+                        </div>
+                        <div class="col-md-4">
+                            <select name="genre" class="form-select custom-input">
+                                <option selected value="">Όλα τα είδη</option>
+                                <option value="1">Δράση</option>
+                                <option value="2">Κωμωδία</option>
+                                <option value="3">Θρίλερ</option>
+                                <option value="4">Σειρές</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="submit" class="btn fw-bold w-100" style="background-color: #ffc107; color: #000; height: 100%;">
+                                Αναζήτηση
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="mt-4 text-center">
+                    <p class="text-white-50">Βρέθηκαν 0 αποτελέσματα</p>
+                    <hr style="border-color: #333;">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
