@@ -57,6 +57,19 @@
             color: white;
             box-shadow: 0 0 0 0.25rem rgba(255, 193, 7, 0.25);
         }
+        
+        .form-control::placeholder {
+            color: #888888 !important;
+            opacity: 1; 
+        }
+        
+        .form-control:-webkit-autofill,
+        .form-control:-webkit-autofill:hover, 
+        .form-control:-webkit-autofill:focus {
+            -webkit-text-fill-color: white !important;
+            -webkit-box-shadow: 0 0 0px 1000px #252525 inset !important;
+            transition: background-color 5000s ease-in-out 0s;
+        }
 
         .btn-signup {
             background: linear-gradient(45deg, #ffc107, #ff9800);
@@ -98,29 +111,52 @@
         <a href="#" class="brand-logo">🎬 CineData</a>
         <h4 class="text-center mb-4 fw-bold">Δημιουργία Λογαριασμού 🍿</h4>
         
-        <form>
+        {% if errors.general %}
+            <div class="alert alert-danger text-center small py-2" role="alert" style="background-color: #ff6b6b; color: white; border: none; border-radius: 10px;">
+                ⚠️ {{ errors.general }}
+            </div>
+        {% endif %}
+
+        <form method="POST" action="/signup/" novalidate autocomplete="new-password">
+            {% csrf_token %} 
+            
             <div class="mb-3">
                 <label class="form-label">Όνομα Χρήστη</label>
-                <input type="text" class="form-control" placeholder="π.χ. movie_fan_99">
+                {% if errors.username %}
+                    <span class="d-block small text-danger mb-1" style="color: #ff6b6b !important; font-weight: bold;">⚠️ {{ errors.username }}</span>
+                {% endif %}
+                <input type="text" name="username" class="form-control" placeholder="Όνομα Χρήστη" value="{{ username_value|default:'' }}">
             </div>
 
             <div class="mb-3">
                 <label class="form-label">Email</label>
-                <input type="email" class="form-control" placeholder="name@example.com">
+                {% if errors.email %}
+                    <span class="d-block small text-danger mb-1" style="color: #ff6b6b !important; font-weight: bold;">⚠️ {{ errors.email }}</span>
+                {% endif %}
+                <input type="email" name="email" class="form-control" placeholder="Email" value="{{ email_value|default:'' }}">
             </div>
 
             <div class="mb-3">
                 <label class="form-label">Κωδικός Πρόσβασης</label>
-                <input type="password" class="form-control" placeholder="••••••••">
+                {% if errors.password %}
+                    <span class="d-block small text-danger mb-1" style="color: #ff6b6b !important; font-weight: bold;">⚠️ {{ errors.password }}</span>
+                {% endif %}
+                <input type="password" name="password" class="form-control" placeholder="••••••">
             </div>
 
             <div class="mb-3">
                 <label class="form-label">Επιβεβαίωση Κωδικού</label>
-                <input type="password" class="form-control" placeholder="••••••••">
+                {% if errors.password_confirm %}
+                    <span class="d-block small text-danger mb-1" style="color: #ff6b6b !important; font-weight: bold;">⚠️ {{ errors.password_confirm }}</span>
+                {% endif %}
+                <input type="password" name="password_confirm" class="form-control" placeholder="••••••">
             </div>
 
             <div class="form-check mb-3">
-                <input class="form-check-input" type="checkbox" id="terms">
+                {% if errors.terms %}
+                    <span class="d-block small text-danger mb-1" style="color: #ff6b6b !important; font-weight: bold;">⚠️ {{ errors.terms }}</span>
+                {% endif %}
+                <input class="form-check-input" type="checkbox" name="terms" id="terms" value="true">
                 <label class="form-check-label text-secondary small" for="terms">
                     Αποδέχομαι τους Όρους Χρήσης και την Πολιτική Απορρήτου.
                 </label>
@@ -130,10 +166,6 @@
         </form>
 
         <div class="login-link">
-            Έχεις ήδη λογαριασμό; <a href="#">Σύνδεση</a>
+            Έχεις ήδη λογαριασμό; <a href="/login/">Σύνδεση</a>
         </div>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
