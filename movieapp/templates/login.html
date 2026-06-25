@@ -16,26 +16,40 @@
         .btn-login:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(255, 152, 0, 0.4); color: #000; }
         .signup-link { text-align: center; margin-top: 1.5rem; font-size: 0.9rem; color: #888; }
         .signup-link a { color: #ffc107; text-decoration: none; font-weight: 600; }
+
+    .form-control::placeholder {
+            color: #888888 !important;
+            opacity: 1; 
+        }
     </style>
 </head>
 <body>
     <div class="login-container">
-        <a href="#" class="brand-logo">🎬 CineData</a>
-        <h4 class="text-center mb-4 fw-bold">Καλώς Ήρθατε! 🍿</h4>
-        <form>
-            <div class="mb-3">
-                <label class="form-label text-secondary small fw-bold">Όνομα Χρήστη</label>
-                <input type="text" class="form-control" placeholder="Εισάγετε το username">
+    <a href="#" class="brand-logo">🎬 CineData</a>
+    <h4 class="text-center mb-4 fw-bold">Καλώς Ήρθατε! 🍿</h4>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-danger" style="color: red; margin-bottom: 15px;">
+                {{ message }}
             </div>
-            <div class="mb-3">
-                <label class="form-label text-secondary small fw-bold">Κωδικός Πρόσβασης</label>
-                <input type="password" class="form-control" placeholder="••••••••">
-            </div>
-            <button type="submit" class="btn btn-login">ΣΥΝΔΕΣΗ</button>
-        </form>
-        <div class="signup-link">
-            Δεν έχεις λογαριασμό; <a href="/signup/">Εγγραφή εδώ</a>
+        {% endfor %}
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label class="form-label text-secondary small fw-bold">Όνομα Χρήστη</label>
+            <input type="text" name="username" class="form-control" required>
         </div>
+        <div class="mb-3">
+            <label class="form-label text-secondary small fw-bold">Κωδικός Πρόσβασης</label>
+            <input type="password" name="password" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-login">ΣΥΝΔΕΣΗ</button>
+    </form>
+    
+    <div class="signup-link">
+        Δεν έχεις λογαριασμό; <a href="/signup/">Εγγραφή εδώ</a>
     </div>
-</body>
-</html>
+</div>

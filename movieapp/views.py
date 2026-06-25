@@ -4,6 +4,7 @@ from django.contrib.auth import login
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import Review, Movie, UserProfile
+from django.contrib.auth import authenticate, login
 
 
 def catalog_view(request):
@@ -59,7 +60,19 @@ def signup_view(request):
         return redirect('profile') 
         
     return render(request, 'signup.html')
+
 def login_view(request):
+    if request.method == 'POST':
+        u = request.POST.get('username')
+        p = request.POST.get('password')
+        user = authenticate(request, username=u, password=p)
+        
+        if user is not None:
+            login(request, user)
+            return redirect('home') 
+        else:
+            messages.error(request, "Λανθασμένο Όνομα Χρήστη ή Κωδικός.")
+    
     return render(request, 'login.html')
 
 def logout_view(request):
