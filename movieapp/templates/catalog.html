@@ -23,10 +23,20 @@
 <body>
 
     <nav class="navbar navbar-expand-lg navbar-dark mb-5 shadow-lg">
-        <div class="container">
-            <a class="navbar-brand text-warning fw-bold" href="#" style="font-size: 2rem;">🎬 CineData</a>
+    <div class="container">
+        <a class="navbar-brand text-warning fw-bold" href="#" style="font-size: 2rem;">🎬 CineData</a>
+        
+        <div class="d-flex align-items-center">
+            {% if user.is_authenticated %}
+                <span class="text-white me-4 fw-bold" style="font-size: 1.2rem; letter-spacing: 0.5px;"> Καλώς ήρθες, <strong>{{ user.username }}</strong>!</span>
+                <a href="{% url 'profile' %}" class="btn btn-outline-warning btn-sm me-2">Προφίλ μου</a>
+                <a href="{% url 'logout' %}" class="btn btn-outline-light btn-sm">Αποσύνδεση</a>
+            {% else %}
+                <a href="{% url 'login' %}" class="btn btn-warning btn-sm">Σύνδεση</a>
+            {% endif %}
         </div>
-    </nav>
+    </div>
+</nav>
 
     <div class="container pb-5">
         <h2 class="text-center mb-5 fw-bold">🍿 Δημοφιλείς Ταινίες</h2>
