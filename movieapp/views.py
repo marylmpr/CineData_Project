@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import login
+from django.contrib.auth import logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import Review, Movie, UserProfile
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate
 
 
 def catalog_view(request):
@@ -76,7 +77,12 @@ def login_view(request):
     return render(request, 'login.html')
 
 def logout_view(request):
+    if request.method == 'POST':
+        logout(request)  
+        return redirect('logout') 
+    
     return render(request, 'logout.html')
+
 
 
 @login_required(login_url='/login/') 

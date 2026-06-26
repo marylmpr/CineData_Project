@@ -30,7 +30,11 @@
             {% if user.is_authenticated %}
                 <span class="text-white me-4 fw-bold" style="font-size: 1.2rem; letter-spacing: 0.5px;"> Καλώς ήρθες, <strong>{{ user.username }}</strong>!</span>
                 <a href="{% url 'profile' %}" class="btn btn-outline-warning btn-sm me-2">Προφίλ μου</a>
-                <a href="{% url 'logout' %}" class="btn btn-outline-light btn-sm">Αποσύνδεση</a>
+        
+        <form action="{% url 'logout' %}" method="post" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-outline-light btn-sm">Αποσύνδεση</button>
+        </form>
             {% else %}
                 <a href="{% url 'login' %}" class="btn btn-warning btn-sm">Σύνδεση</a>
             {% endif %}
