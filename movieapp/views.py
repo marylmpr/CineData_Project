@@ -1,17 +1,14 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-from django.contrib.auth import login
-from django.contrib.auth import logout
+from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import Review, Movie, UserProfile
-from django.contrib.auth import authenticate
 
 
 def catalog_view(request):
-    return render(request, 'catalog.html')
-
-
+    all_movies = Movie.objects.all()
+    return render(request, 'catalog.html', {'movies': all_movies})
 
 def signup_view(request):
     if request.method == 'POST':
@@ -35,7 +32,6 @@ def signup_view(request):
         if password and len(password) < 6:
             errors['password'] = "Ο κωδικός πρόσβασης πρέπει να είναι τουλάχιστον 6 χαρακτήρες."
             
-    
         if password != password_confirm:
             errors['password_confirm'] = "Οι κωδικοί πρόσβασης δεν ταιριάζουν."
 
@@ -45,7 +41,6 @@ def signup_view(request):
         if username and User.objects.filter(username=username).exists():
             errors['username'] = "Το όνομα χρήστη χρησιμοποιείται ήδη."
 
-       
         if errors:
             return render(request, 'signup.html', {
                 'errors': errors,
@@ -83,10 +78,7 @@ def logout_view(request):
     
     return render(request, 'logout.html')
 
-
-
 @login_required(login_url='/login/') 
-
 def profile_view(request):
     user = request.user
     total_reviews = 0
@@ -102,10 +94,9 @@ def profile_view(request):
         'user': user,
         'total_reviews': total_reviews
     })
+
 def search_view(request):
     return render(request, 'search.html')
-
-
 
 def reviews_view(request):
     movies = Movie.objects.all()
@@ -128,15 +119,12 @@ def reviews_view(request):
         return redirect('reviews_history')
 
     return render(request, 'reviews.html', {'movies': movies})
-        
-    all_movies = Movie.objects.all()
-    return render(request, 'reviews.html', {'movies': all_movies})
 
 def reviews_history(request):
     all_reviews = Review.objects.all().order_by('-id')
     return render(request, 'reviews_history.html', {'reviews': all_reviews})
 
-
-def details_view(request):
-    return render(request, 'details.html')
- 
+def details_view(request, movie_id):
+    # Παίρνουμε τη συγκεκριμένη ταινία με βάση το ID της
+    movie = Movie.objects.get(id=movie_id)
+    return render(request, 'details.html', {'movie': movie})
