@@ -1,1 +1,5 @@
 db.sqlite3
+__pychache__/
+*.__pychache__.env
+media/
+.vscode/
