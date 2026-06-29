@@ -1,3 +1,6 @@
+import os
+
+
 """
 Django settings for cinedata_project project.
 
@@ -119,4 +122,7 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 

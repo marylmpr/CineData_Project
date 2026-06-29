@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
@@ -126,5 +126,5 @@ def reviews_history(request):
 
 def details_view(request, movie_id):
     # Παίρνουμε τη συγκεκριμένη ταινία με βάση το ID της
-    movie = Movie.objects.get(id=movie_id)
+    movie = get_object_or_404(Movie, id=movie_id)
     return render(request, 'details.html', {'movie': movie})

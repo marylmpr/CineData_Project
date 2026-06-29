@@ -1,13 +1,3 @@
-
-
-
-
-
-
-
-
-
-
 <!DOCTYPE html>
 <html lang="el">
 <head>
@@ -106,7 +96,7 @@
                         <p class="text-muted" style="font-size: 0.85rem;">🕒 {{ movie.duration }}</p>
                         
                         <div class="mt-auto">
-                            <a href="/details/{{ movie.id }}/" class="btn btn-details">ΛΕΠΤΟΜΕΡΕΙΕΣ</a>
+                            <a href="{% url 'details' movie.id %}" class="btn btn-details">ΛΕΠΤΟΜΕΡΕΙΕΣ</a>
                         </div>
                     </div>
                 </div>
