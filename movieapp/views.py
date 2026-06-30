@@ -106,9 +106,13 @@ def reviews_view(request):
         rating = request.POST.get('review_rating')
         comment = request.POST.get('review_comment')
         chosen_movie = Movie.objects.get(id=movie_id)
-        default_user = UserProfile.objects.first()
+        if request.user.is_authenticated:
+            default_user = UserProfile.objects.filter(username=request.user.username).first()
+        else:
+            default_user = None
+        
         if not default_user:
-            default_user = UserProfile.objects.create(username="mary", email="mary@test.com")
+            default_user = UserProfile.objects.first()
 
         Review.objects.create(
             movie=chosen_movie,
@@ -116,12 +120,23 @@ def reviews_view(request):
             rating=int(rating),
             comment=comment
         )
-        return redirect('reviews_history')
+        return redirect('reviews_history', movie_id=movie_id)
 
     return render(request, 'reviews.html', {'movies': movies})
 
-def reviews_history(request):
-    all_reviews = Review.objects.all().order_by('-id')
+
+def reviews_history(request, movie_id):
+
+    if request.user.is_authenticated:
+        current_user = UserProfile.objects.filter(username=request.user.username).first()
+    else:
+        current_user = None
+
+    if not current_user:
+        current_user = UserProfile.objects.first()
+
+    all_reviews = Review.objects.filter(user=current_user).order_by('-id')
+    
     return render(request, 'reviews_history.html', {'reviews': all_reviews})
 
 def details_view(request, movie_id):

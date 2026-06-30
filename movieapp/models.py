@@ -66,5 +66,5 @@ class Review(models.Model):
 
     def __str__(self):
         if self.user:
-            return self.user.get_username()
+            return self.user.username
         return f"Κριτική (ID: {self.id})"

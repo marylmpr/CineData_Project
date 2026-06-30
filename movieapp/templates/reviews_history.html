@@ -108,7 +108,7 @@
                 <tr>
                     <td class="movie-title">{{ review.movie.title }}</td> 
                     <td>{{ review.comment }}</td>
-                    <td><span class="rating">{{ review.rating }}/5</span></td>
+                    <td><span class="rating">⭐ {{ review.rating }}/5</span></td>
                     <td>{{ review.created_at|date:"d/m/Y" }}</td>
                 </tr>
                 {% empty %}
@@ -119,8 +119,15 @@
             </tbody>
         </table>
 
-        <a href="{% url 'reviews' %}" class="back-link" style="margin-right: 20px;">+ Νέα Κριτική</a>
+
+        {% if reviews %}
+            <a href="/reviews/" class="back-link" style="margin-right: 20px;">+ Νέα Κριτική</a>
+        {% else %}
+            <a href="/reviews/" class="back-link" style="margin-right: 20px;">+ Νέα Κριτική</a>
+        {% endif %}
         <a href="/catalog/" class="back-link">← Πίσω στον Κατάλογο</a>
+
+
     </div>
 
 </body>
