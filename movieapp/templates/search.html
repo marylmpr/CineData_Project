@@ -35,6 +35,16 @@
             color: #ffc107 !important;
             opacity: 0.8;
         }
+        
+        .movie-card {
+            background-color: #1e1e1e;
+            border-radius: 10px;
+            transition: transform 0.2s;
+        }
+        
+        .movie-card:hover {
+            transform: scale(1.03);
+        }
     </style>
 </head>
 <body class="text-white">
@@ -53,17 +63,16 @@
                 <div class="card shadow-lg p-4 text-white border-0" style="background-color: #1e1e1e; border-radius: 15px;">
                     <h2 class="mb-4 text-center" style="font-weight: 600;">Αναζήτηση Ταινιών 🔍</h2>
                     
-                    <form class="row g-3" method="GET" action="/search/">
+                    <form class="row g-3" method="GET" action="{% url 'search' %}">
                         <div class="col-md-6">
-                            <input type="text" name="q" class="form-control custom-input" placeholder="Γράψτε τίτλο ταινίας...">
+                            <input type="text" name="q" class="form-control custom-input" placeholder="Γράψτε τίτλο ταινίας..." value="{{ query }}">
                         </div>
                         <div class="col-md-4">
                             <select name="genre" class="form-select custom-input">
-                                <option selected value="">Όλα τα είδη</option>
-                                <option value="1">Δράση</option>
-                                <option value="2">Κωμωδία</option>
-                                <option value="3">Θρίλερ</option>
-                                <option value="4">Σειρές</option>
+                                <option value="">Όλα τα είδη</option>
+                                {% for cat in categories %}
+                                    <option value="{{ cat.id }}" {% if genre_id == cat.id|stringformat:"i" %}selected{% endif %}>{{ cat.name }}</option>
+                                {% endfor %}
                             </select>
                         </div>
                         <div class="col-md-2">
@@ -75,8 +84,31 @@
                 </div>
 
                 <div class="mt-4 text-center">
-                    <p class="text-white-50">Βρέθηκαν 0 αποτελέσματα</p>
-                    <hr style="border-color: #333;">
+                    {% if results is not None %}
+                        <p class="text-white-50">Βρέθηκαν {{ results|length }} αποτελέσματα</p>
+                        <hr style="border-color: #333;">
+                        
+                        {% if results %}
+                            <div class="row text-start mt-4">
+                                {% for movie in results %}
+                                    <div class="col-md-4 mb-4">
+                                        <div class="card movie-card text-white h-100 border-0 shadow">
+                                            {% if movie.poster %}
+                                                <img src="{{ movie.poster.url }}" class="card-img-top" alt="{{ movie.title }}" style="border-top-left-radius: 10px; border-top-right-radius: 10px; max-height: 400px; object-fit: cover;">
+                                            {% endif %}
+                                            <div class="card-body d-flex flex-column">
+                                                <h5 class="card-title" style="color: #ffc107;">{{ movie.title }}</h5>
+                                                <p class="card-text text-white-50 small">{{ movie.description|truncatechars:120 }}</p>
+                                                <a href="{% url 'movie_details' movie.id %}" class="btn btn-sm fw-bold mt-auto" style="background-color: #ffc107; color: #000;">Προβολή</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <p class="alert alert-dark mt-4" style="background-color: #1e1e1e; border: 1px solid #333; color: #aaa;">Δεν βρέθηκαν ταινίες που να ταιριάζουν με τα κριτήρια.</p>
+                        {% endif %}
+                    {% endif %}
                 </div>
             </div>
         </div>

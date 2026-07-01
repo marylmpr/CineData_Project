@@ -4,6 +4,8 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import Review, Movie, UserProfile
+from django.db.models import Q
+from .models import Movie, MovieCategory
 
 
 def catalog_view(request):
@@ -95,8 +97,32 @@ def profile_view(request):
         'total_reviews': total_reviews
     })
 
+
+
 def search_view(request):
-    return render(request, 'search.html')
+    query = request.GET.get('q', '')
+    genre_id = request.GET.get('genre', '')
+    
+    categories = MovieCategory.objects.all()
+    results = Movie.objects.all()
+    
+    if query:
+        results = results.filter(
+            Q(title__icontains=query) | Q(description__icontains=query)
+        )
+        
+    if genre_id:
+        results = results.filter(category_id=genre_id)
+        
+    if not query and not genre_id:
+        results = None
+
+    return render(request, 'search.html', {
+        'results': results,
+        'query': query,
+        'genre_id': genre_id,
+        'categories': categories
+    })
 
 def reviews_view(request):
     movies = Movie.objects.all()
@@ -126,20 +152,12 @@ def reviews_view(request):
 
 
 def reviews_history(request, movie_id):
+    all_reviews = Review.objects.filter(movie_id=movie_id).order_by('-id')
 
-    if request.user.is_authenticated:
-        current_user = UserProfile.objects.filter(username=request.user.username).first()
-    else:
-        current_user = None
-
-    if not current_user:
-        current_user = UserProfile.objects.first()
-
-    all_reviews = Review.objects.filter(user=current_user).order_by('-id')
-    
     return render(request, 'reviews_history.html', {'reviews': all_reviews})
 
+
+@login_required(login_url='login')
 def details_view(request, movie_id):
-    # Παίρνουμε τη συγκεκριμένη ταινία με βάση το ID της
     movie = get_object_or_404(Movie, id=movie_id)
     return render(request, 'details.html', {'movie': movie})
